@@ -134,6 +134,7 @@ function DonutWithLegend({ data, colors }) {
 }
 
 const TABS = ['Visão Geral', 'Deficiência', 'Benefícios', 'Engajamento']
+const CARRETA_LOGO = `${import.meta.env.BASE_URL}carreta.png`
 
 export default function Dashboard({ data, onBack }) {
   const [activeTab, setActiveTab] = useState(0)
@@ -178,7 +179,9 @@ export default function Dashboard({ data, onBack }) {
     <div className="dashboard">
       <div className="dash-header">
         <div className="dash-logo">
-          <span className="dash-logo-icon">♿</span>
+          <span className="dash-logo-icon-wrap">
+            <img className="dash-logo-icon" src={CARRETA_LOGO} alt="Carreta da Inclusão" />
+          </span>
           <div>
             <div className="dash-logo-title">Carreta da Inclusão</div>
             <div className="dash-logo-sub">SEPD · GDF</div>

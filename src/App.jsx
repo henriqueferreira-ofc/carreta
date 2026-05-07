@@ -4,6 +4,7 @@ import './App.css'
 import heroImage from './assets/hero.png'
 
 const FIXED_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1BIst4qwgxn1ZARnJwgwNLfKXB2f4HVO3zQl4V_xTndc/edit?usp=sharing'
+const CARRETA_LOGO = `${import.meta.env.BASE_URL}carreta.png`
 
 function CountUp({ end, suffix = '', duration = 1100 }) {
   const [value, setValue] = useState(0)
@@ -418,7 +419,9 @@ export default function App() {
           <div className="landing-inner">
             <div className="landing-topbar">
               <div className="brand entrance-top">
-                <div className="brand-icon">♿</div>
+                <span className="brand-icon-wrap">
+                  <img className="brand-icon" src={CARRETA_LOGO} alt="Carreta da Inclusão" />
+                </span>
                 <div>
                   <div className="brand-title">Carreta da Inclusão</div>
                   <div className="brand-sub">SEPD · Secretaria da Pessoa com Deficiência · GDF</div>

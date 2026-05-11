@@ -805,9 +805,20 @@ body {
   padding: 1.35rem 2rem 0.55rem;
   border-bottom: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(246,251,255,0.96), rgba(230,247,255,0.72));
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+.tabs-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
+  flex: 0 0 auto;
+  min-width: 112px;
   padding: 9px 18px;
   font-size: 13px;
   font-family: 'DM Sans', sans-serif;
@@ -817,6 +828,9 @@ body {
   border: 1px solid rgba(0,111,184,0.12);
   border-radius: 10px 10px 6px 6px;
   cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  scroll-snap-align: start;
   box-shadow:
     0 8px 18px rgba(0,75,115,0.08),
     inset 0 1px 0 rgba(255,255,255,0.95),
@@ -1083,17 +1097,14 @@ body {
   }
 
   .tabs-bar {
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .tabs-bar::-webkit-scrollbar {
-    display: none;
+    gap: 6px;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
   }
 
   .tab-btn {
-    white-space: nowrap;
-    flex: 0 0 auto;
+    min-width: 116px;
+    padding: 8px 14px;
   }
 
   .two-col,
@@ -1181,6 +1192,13 @@ body {
   .back-btn { padding: 6px 10px; }
   .stat-row { align-items: flex-start; }
   .stat-bar-wrap { display: none; }
+  .tabs-bar { gap: 5px; }
+  .tab-btn {
+    min-width: 104px;
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 9px 9px 6px 6px;
+  }
 }
 
 @media (hover: none), (pointer: coarse) {

@@ -8,7 +8,7 @@ import { parseCSV } from './utils/csv'
 import './App.css'
 import heroImage from './assets/hero.png'
 
-const CARRETA_LOGO = `${import.meta.env.BASE_URL}carreta.png`
+const INCLUSAO_LOGO = `${import.meta.env.BASE_URL}inclusao.png`
 
 export default function App() {
   const [data, setData] = useState(null)
@@ -60,8 +60,8 @@ export default function App() {
           <div className="landing-inner">
             <div className="landing-topbar">
               <div className="brand entrance-top">
-                <span className="brand-icon-wrap">
-                  <img className="brand-icon" src={CARRETA_LOGO} alt="Carreta da Inclusão" />
+                <span className="brand-logo-wrap">
+                  <img className="brand-logo" src={INCLUSAO_LOGO} alt="Mandato da Inclusão" />
                 </span>
                 <div>
                   <div className="brand-title">Carreta da Inclusão</div>

@@ -26,6 +26,8 @@ export default function App() {
   }
 
   function handlePanelMove(event) {
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
     const panel = panelRef.current
     if (!panel) return
 
@@ -64,7 +66,7 @@ export default function App() {
                   <img className="brand-logo" src={INCLUSAO_LOGO} alt="Mandato da Inclusão" />
                 </span>
                 <div>
-                  <div className="brand-title">Carreta da Inclusão</div>
+                  <div className="brand-title">Mandato da Inclusão</div>
                   <div className="brand-sub">SEPD · Secretaria da Pessoa com Deficiência · GDF</div>
                 </div>
               </div>
@@ -113,21 +115,21 @@ export default function App() {
             </div>
 
             <div className="landing-cards">
-              <Reveal delay={80}>
+              <Reveal>
                 <div className="landing-card">
                   <span>01</span>
                   <strong>Benefícios solicitados</strong>
                   <p>Ranking das principais demandas para orientar a resposta da equipe.</p>
                 </div>
               </Reveal>
-              <Reveal delay={170}>
+              <Reveal>
                 <div className="landing-card">
                   <span>02</span>
                   <strong>Conhecimento da SEPD</strong>
                   <p>Leitura por cidade de quem conhece os atendimentos e serviços.</p>
                 </div>
               </Reveal>
-              <Reveal delay={260}>
+              <Reveal>
                 <div className="landing-card">
                   <span>03</span>
                   <strong>Visitas por cidade</strong>

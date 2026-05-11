@@ -9,12 +9,12 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend)
 
 const PALETTE = {
-  teal: '#1D9E75', tealLight: '#5DCAA7',
-  orange: '#D85A30', blue: '#378ADD',
-  purple: '#534AB7', gray: '#888780',
-  amber: '#EF9F27', pink: '#D4537E',
-  coral: '#F0997B', green: '#639922',
-  navy: '#185FA5'
+  teal: '#079FE3', tealLight: '#73D8FF',
+  orange: '#FFE200', blue: '#006FB8',
+  purple: '#151515', gray: '#6B7882',
+  amber: '#F3C300', pink: '#31B7F0',
+  coral: '#D8B400', green: '#9FE7FF',
+  navy: '#004D80'
 }
 
 const BAR_COLORS = [
@@ -34,12 +34,12 @@ const BAR_OPTS = (horizontal = false) => ({
   indexAxis: horizontal ? 'y' : 'x',
   scales: {
     x: {
-      grid: { display: horizontal, color: 'rgba(136,135,128,0.12)' },
-      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#888780', maxRotation: horizontal ? 0 : 40 }
+      grid: { display: horizontal, color: 'rgba(0,111,184,0.12)' },
+      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#6B7882', maxRotation: horizontal ? 0 : 40 }
     },
     y: {
-      grid: { display: !horizontal, color: 'rgba(136,135,128,0.12)' },
-      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#888780' }
+      grid: { display: !horizontal, color: 'rgba(0,111,184,0.12)' },
+      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#6B7882' }
     }
   },
   borderRadius: 6,
@@ -52,13 +52,13 @@ const STACKED_BAR_OPTS = {
   scales: {
     x: {
       stacked: true,
-      grid: { display: true, color: 'rgba(136,135,128,0.12)' },
-      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#888780' }
+      grid: { display: true, color: 'rgba(0,111,184,0.12)' },
+      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#6B7882' }
     },
     y: {
       stacked: true,
       grid: { display: false },
-      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#888780' }
+      ticks: { font: { size: 11, family: 'DM Sans' }, color: '#6B7882' }
     }
   },
   borderRadius: 6,
@@ -134,7 +134,7 @@ function DonutWithLegend({ data, colors }) {
 }
 
 const TABS = ['Visão Geral', 'Deficiência', 'Benefícios', 'Engajamento']
-const CARRETA_LOGO = `${import.meta.env.BASE_URL}carreta.png`
+const INCLUSAO_LOGO = `${import.meta.env.BASE_URL}inclusao.png`
 
 export default function Dashboard({ data, onBack }) {
   const [activeTab, setActiveTab] = useState(0)
@@ -180,10 +180,10 @@ export default function Dashboard({ data, onBack }) {
       <div className="dash-header">
         <div className="dash-logo">
           <span className="dash-logo-icon-wrap">
-            <img className="dash-logo-icon" src={CARRETA_LOGO} alt="Carreta da Inclusão" />
+            <img className="dash-logo-icon" src={INCLUSAO_LOGO} alt="Mandato da Inclusão" />
           </span>
           <div>
-            <div className="dash-logo-title">Carreta da Inclusão</div>
+            <div className="dash-logo-title">Mandato da Inclusão</div>
             <div className="dash-logo-sub">SEPD · GDF</div>
           </div>
         </div>
@@ -450,7 +450,7 @@ export default function Dashboard({ data, onBack }) {
       </div>
 
       <div className="dash-footer">
-        Carreta da Inclusão · SEPD / GDF · {new Date().getFullYear()}
+        Mandato da Inclusão · SEPD / GDF · {new Date().getFullYear()}
       </div>
     </div>
   )

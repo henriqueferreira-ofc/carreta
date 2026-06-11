@@ -1,7 +1,14 @@
 export const FIXED_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1BIst4qwgxn1ZARnJwgwNLfKXB2f4HVO3zQl4V_xTndc/edit?usp=sharing'
 
+// Lista completa de abas/cidades da planilha (atualizada automaticamente via inspeção)
+// Usada como fallback quando a descoberta dinâmica via HTML não retorna resultados
 export const KNOWN_CITY_TABS = {
   '1BIst4qwgxn1ZARnJwgwNLfKXB2f4HVO3zQl4V_xTndc': [
+    { gid: '1399475077', name: 'Paranoá' },
+    { gid: '1352801462', name: 'Itapoã' },
+    { gid: '1984153019', name: 'Riacho Fundo I' },
+    { gid: '2055365767', name: 'Riacho Fundo II' },
+    { gid: '1818402261', name: 'Águas Claras' },
     { gid: '1625580577', name: 'Sobradinho' },
     { gid: '864675926', name: 'Brazlândia' },
     { gid: '1998549442', name: 'São Sebastião' },

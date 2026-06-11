@@ -434,6 +434,7 @@ body {
   gap: 10px;
   z-index: 3;
   transform: translateZ(32px);
+  margin-top: 4px;
 }
 
 .panel-grid div {
@@ -1171,10 +1172,15 @@ body {
   }
   .hero-asset { width: min(60%, 180px); margin-bottom: 12px; }
   .panel-title { font-size: 13px; margin-bottom: 12px; }
-  .panel-grid { gap: 6px; grid-template-columns: repeat(3, 1fr); }
-  .panel-grid div { padding: 10px 4px; border-radius: 10px; }
-  .panel-grid strong { font-size: 18px; }
-  .panel-grid span { font-size: 9px; margin-top: 3px; }
+  .panel-grid {
+    gap: 6px;
+    grid-template-columns: repeat(3, 1fr);
+    transform: none;  /* remove translateZ — not needed without 3D tilt */
+    width: 100%;
+  }
+  .panel-grid div { padding: 10px 6px; border-radius: 10px; }
+  .panel-grid strong { font-size: 19px; }
+  .panel-grid span { font-size: 9.5px; margin-top: 4px; }
   .hero-title { font-size: 38px; }
   .hero-desc { font-size: 15px; }
   .hero-actions { align-items: stretch; }
@@ -1201,10 +1207,14 @@ body {
   .brand-logo-wrap { width: min(100%, 158px); }
   .landing-card { min-height: auto; }
   /* Mantém 3 colunas lado a lado em telas muito pequenas */
-  .panel-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
-  .panel-grid div { padding: 8px 2px; }
-  .panel-grid strong { font-size: 16px; }
-  .panel-grid span { font-size: 8px; }
+  .panel-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    transform: none;
+  }
+  .panel-grid div { padding: 9px 4px; }
+  .panel-grid strong { font-size: 17px; }
+  .panel-grid span { font-size: 9px; }
   .dash-logo-icon-wrap { width: 132px; }
   .dash-logo-sub { display: none; }
   .back-btn { padding: 6px 10px; }

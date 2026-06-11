@@ -469,6 +469,12 @@ body {
   color: var(--text-muted);
 }
 
+.stat-loading {
+  color: var(--text-muted);
+  font-size: 18px;
+  opacity: 0.5;
+}
+
 .spinner {
   width: 14px;
   height: 14px;
@@ -1158,15 +1164,17 @@ body {
   .hero-shell { grid-template-columns: 1fr; gap: 24px; }
   .hero-panel {
     width: 100%;
-    min-height: 260px;
+    min-height: auto;
     border-radius: 20px;
-    padding: 24px 18px;
+    padding: 20px 14px;
     transform: none !important;
   }
-  .hero-asset { width: min(70%, 220px); }
-  .panel-grid { gap: 8px; }
-  .panel-grid div { padding: 12px 6px; }
-  .panel-grid strong { font-size: 21px; }
+  .hero-asset { width: min(60%, 180px); margin-bottom: 12px; }
+  .panel-title { font-size: 13px; margin-bottom: 12px; }
+  .panel-grid { gap: 6px; grid-template-columns: repeat(3, 1fr); }
+  .panel-grid div { padding: 10px 4px; border-radius: 10px; }
+  .panel-grid strong { font-size: 18px; }
+  .panel-grid span { font-size: 9px; margin-top: 3px; }
   .hero-title { font-size: 38px; }
   .hero-desc { font-size: 15px; }
   .hero-actions { align-items: stretch; }
@@ -1192,8 +1200,11 @@ body {
   .hero-kicker { font-size: 11px; }
   .brand-logo-wrap { width: min(100%, 158px); }
   .landing-card { min-height: auto; }
-  .panel-grid { grid-template-columns: 1fr; }
-  .panel-grid span { font-size: 10px; }
+  /* Mantém 3 colunas lado a lado em telas muito pequenas */
+  .panel-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .panel-grid div { padding: 8px 2px; }
+  .panel-grid strong { font-size: 16px; }
+  .panel-grid span { font-size: 8px; }
   .dash-logo-icon-wrap { width: 132px; }
   .dash-logo-sub { display: none; }
   .back-btn { padding: 6px 10px; }

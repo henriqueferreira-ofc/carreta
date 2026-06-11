@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Dashboard from './components/Dashboard'
 import CountUp from './components/landing/CountUp'
 import Reveal from './components/landing/Reveal'
 import { FIXED_SHEET_URL } from './config/sheets'
-import { fetchSheetCsv } from './services/sheets'
+import { fetchSheetCsv, fetchSheetStats } from './services/sheets'
 import { parseCSV } from './utils/csv'
 import './App.css'
 import heroImage from './assets/hero.png'
@@ -15,6 +15,11 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const panelRef = useRef(null)
+  const [sheetStats, setSheetStats] = useState({ totalCities: null, citiesWithData: null })
+
+  useEffect(() => {
+    fetchSheetStats(FIXED_SHEET_URL).then(setSheetStats)
+  }, [])
 
   async function loadFromSheets() {
     setError(''); setLoading(true)
@@ -99,11 +104,19 @@ export default function App() {
                 <div className="panel-title"><span></span> Monitoramento ativo</div>
                 <div className="panel-grid">
                   <div>
-                    <strong><CountUp end={10} /></strong>
+                    <strong>
+                      {sheetStats.totalCities !== null
+                        ? <CountUp end={sheetStats.totalCities} />
+                        : <span className="stat-loading">—</span>}
+                    </strong>
                     <span>cidades</span>
                   </div>
                   <div>
-                    <strong><CountUp end={6} /></strong>
+                    <strong>
+                      {sheetStats.citiesWithData !== null
+                        ? <CountUp end={sheetStats.citiesWithData} />
+                        : <span className="stat-loading">—</span>}
+                    </strong>
                     <span>com dados</span>
                   </div>
                   <div>

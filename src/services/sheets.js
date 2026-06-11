@@ -142,3 +142,29 @@ export async function fetchSheetCsv(sheetUrl) {
 
   throw new Error(`Não consegui ler a planilha${lastStatus}. Abra o link com a aba de respostas selecionada e confirme Compartilhar → Qualquer pessoa com o link → Leitor.`)
 }
+
+/**
+ * Busca estatísticas reais da planilha: total de cidades (abas) e quantas têm respostas.
+ * Usado no painel hero da landing para mostrar dados reais ao invés de valores fixos.
+ */
+export async function fetchSheetStats(sheetUrl) {
+  try {
+    const { sheetId } = getSheetInfo(sheetUrl)
+    const tabs = await getSheetTabs(sheetId)
+    const totalCities = tabs.length
+
+    let citiesWithData = 0
+    for (const tab of tabs) {
+      const csv = await fetchCsvUrl(
+        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${tab.gid}`
+      )
+      if (!csv) continue
+      const table = parseCSVTable(csv)
+      if (table.length >= 2) citiesWithData++
+    }
+
+    return { totalCities, citiesWithData }
+  } catch {
+    return { totalCities: null, citiesWithData: null }
+  }
+}

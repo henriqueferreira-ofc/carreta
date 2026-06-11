@@ -1167,20 +1167,25 @@ body {
     width: 100%;
     min-height: auto;
     border-radius: 20px;
-    padding: 20px 14px;
+    padding: 20px 16px;
     transform: none !important;
+    transform-style: flat;    /* desativa contexto 3D — box filhos ficam dentro do overflow:hidden */
+    perspective: none;
+    justify-content: flex-start;
   }
-  .hero-asset { width: min(60%, 180px); margin-bottom: 12px; }
-  .panel-title { font-size: 13px; margin-bottom: 12px; }
+  .hero-panel::before { display: none; } /* remove inner border que usa translateZ */
+  .hero-asset { width: min(55%, 170px); margin-bottom: 10px; align-self: center; }
+  .panel-title { font-size: 13px; margin-bottom: 14px; align-self: center; }
   .panel-grid {
-    gap: 6px;
+    gap: 8px;
     grid-template-columns: repeat(3, 1fr);
-    transform: none;  /* remove translateZ — not needed without 3D tilt */
+    transform: none;
     width: 100%;
+    margin-top: 0;
   }
-  .panel-grid div { padding: 10px 6px; border-radius: 10px; }
-  .panel-grid strong { font-size: 19px; }
-  .panel-grid span { font-size: 9.5px; margin-top: 4px; }
+  .panel-grid div { padding: 12px 6px; border-radius: 12px; }
+  .panel-grid strong { font-size: 20px; }
+  .panel-grid span { font-size: 10px; margin-top: 4px; }
   .hero-title { font-size: 38px; }
   .hero-desc { font-size: 15px; }
   .hero-actions { align-items: stretch; }
@@ -1209,10 +1214,10 @@ body {
   /* Mantém 3 colunas lado a lado em telas muito pequenas */
   .panel-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 6px;
     transform: none;
   }
-  .panel-grid div { padding: 9px 4px; }
+  .panel-grid div { padding: 10px 4px; }
   .panel-grid strong { font-size: 17px; }
   .panel-grid span { font-size: 9px; }
   .dash-logo-icon-wrap { width: 132px; }

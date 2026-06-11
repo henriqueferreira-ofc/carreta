@@ -216,6 +216,7 @@ export default function Dashboard({ data, onBack }) {
                   datasets: [{
                     data: sortedCidades.map(c => c.v),
                     backgroundColor: sortedCidades.map((_, i) => i === 0 ? PALETTE.teal : PALETTE.blue + '99'),
+                    minBarLength: 4,
                     borderRadius: 6,
                     borderSkipped: false
                   }]

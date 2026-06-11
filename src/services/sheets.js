@@ -27,20 +27,25 @@ function parseSheetTabs(html) {
   let match
 
   while ((match = tabRegex.exec(html))) {
-    tabs.push({ index: Number(match[1]), gid: match[2], name: match[3] })
+    tabs.push({ index: Number(match[1]), gid: match[2], name: match[3].trim() })
   }
 
   return tabs.sort((a, b) => a.index - b.index)
 }
 
 async function getSheetTabs(sheetId) {
-  if (KNOWN_CITY_TABS[sheetId]) return KNOWN_CITY_TABS[sheetId]
+  const fallbackTabs = KNOWN_CITY_TABS[sheetId] || []
 
-  const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`)
-  if (!res.ok) return []
+  try {
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`)
+    if (!res.ok) return fallbackTabs
 
-  const html = await res.text()
-  return parseSheetTabs(html)
+    const html = await res.text()
+    const discoveredTabs = parseSheetTabs(html)
+    return discoveredTabs.length ? discoveredTabs : fallbackTabs
+  } catch {
+    return fallbackTabs
+  }
 }
 
 function toCSVCell(value) {

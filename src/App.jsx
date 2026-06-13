@@ -72,7 +72,7 @@ export default function App() {
                 </span>
                 <div>
                   <div className="brand-title">Mandato da Inclusão</div>
-                  <div className="brand-sub">SEPD · Secretaria da Pessoa com Deficiência · GDF</div>
+                  <div className="brand-sub">SEPD · Secretaria da Pessoa com Deficiência</div>
                 </div>
               </div>
               <div className="live-badge entrance-badge"><span></span> Dados do Forms</div>

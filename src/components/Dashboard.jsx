@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { MapPin } from 'lucide-react'
+import CitiesView from './CitiesView'
 import { Bar, Doughnut } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -133,7 +135,7 @@ function DonutWithLegend({ data, colors }) {
   )
 }
 
-const TABS = ['Visão Geral', 'Deficiência', 'Benefícios', 'Engajamento']
+const TABS = ['Visão Geral', 'Deficiência', 'Benefícios', 'Engajamento', 'Cidades']
 const INCLUSAO_LOGO = `${import.meta.env.BASE_URL}inclusao.png`
 
 export default function Dashboard({ data, onBack }) {
@@ -202,7 +204,9 @@ export default function Dashboard({ data, onBack }) {
 
       <div className="tabs-bar">
         {TABS.map((t, i) => (
-          <button key={t} className={`tab-btn ${activeTab===i?'active':''}`} onClick={() => setActiveTab(i)}>{t}</button>
+          <button key={t} className={`tab-btn ${t === 'Cidades' ? 'cities-tab' : ''} ${activeTab===i?'active':''}`} onClick={() => setActiveTab(i)}>
+            {t === 'Cidades' && <MapPin size={16} aria-hidden="true" />} {t}
+          </button>
         ))}
       </div>
 
@@ -448,6 +452,7 @@ export default function Dashboard({ data, onBack }) {
             )}
           </div>
         )}
+        {activeTab === 4 && <CitiesView data={data} />}
       </div>
 
       <div className="dash-footer">

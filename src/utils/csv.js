@@ -46,6 +46,9 @@ export function parseCSV(csv) {
   rows.forEach(r => {
     if (!r || !r[0]) return
     const cidade = r[cidadeCol] || 'Não informado'
+    const hasResponse = r.some((value, index) => index !== cidadeCol && String(value || '').trim())
+    if (!(cidade in cidades)) cidades[cidade] = 0
+    if (!hasResponse) return
     addCount(cidades, cidade)
     if (defCol >= 0 && r[defCol]) {
       splitAnswerValues(r[defCol]).forEach(item => addCount(deficiencias, item))
@@ -66,7 +69,7 @@ export function parseCSV(csv) {
     if (politicoCol >= 0) { const v = (r[politicoCol]||'').toLowerCase().includes('sim')?'Sim':'Não'; interessePolitico[v]++ }
   })
 
-  const total = rows.filter(r => r && r[0]).length
+  const total = Object.values(cidades).reduce((sum, count) => sum + count, 0)
   return { total, cidades, deficiencias, beneficios, beneficiosPorCidade, conheceSepd, conheceSepdPorCidade, ficouSabendo, interessePolitico, fontes }
 }
 

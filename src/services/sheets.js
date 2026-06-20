@@ -90,14 +90,21 @@ async function fetchAllTabsCsv(sheetId) {
     loadedTables.push({ tab, table })
   }
 
-  if (!loadedTables.length) {
+  if (!loadedTables.length && !tabs.length) {
     return { csv: null, emptyTabs }
   }
 
-  const headers = ['Cidade', ...loadedTables[0].table[0]]
-  const rows = loadedTables.flatMap(({ tab, table }) =>
-    table.slice(1).filter(row => row.some(value => value)).map(row => [tab.name, ...row])
-  )
+  const headers = ['Cidade', ...(loadedTables[0]?.table[0] || ['Resposta'])]
+  const tablesByGid = new Map(loadedTables.map(item => [item.tab.gid, item.table]))
+  const rows = tabs.flatMap(tab => {
+    const table = tablesByGid.get(tab.gid)
+    if (!table) return [[tab.name]]
+
+    const responseRows = table.slice(1).filter(row => row.some(value => value))
+    return responseRows.length
+      ? responseRows.map(row => [tab.name, ...row])
+      : [[tab.name]]
+  })
 
   return { csv: tableToCSV([headers, ...rows]), emptyTabs, loadedTabs: loadedTables.length }
 }

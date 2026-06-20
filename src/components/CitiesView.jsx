@@ -70,8 +70,8 @@ export default function CitiesView({ data }) {
             </div>
           ) : (
             <div className="cities-grid">
-              {filteredCities.map(city => (
-                <button className="city-card" type="button" key={city.key} onClick={() => setSelectedKey(city.key)}>
+              {filteredCities.map((city, index) => (
+                <button className={`city-card ${index % 2 === 0 ? 'city-card-blue' : 'city-card-yellow'}`} type="button" key={city.key} onClick={() => setSelectedKey(city.key)}>
                   <span className="city-icon"><MapPin aria-hidden="true" /></span>
                   <span className="city-card-copy">
                     <strong>{city.name}</strong>

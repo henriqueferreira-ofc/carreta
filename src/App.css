@@ -1241,6 +1241,56 @@ body {
   line-height: 1.4;
 }
 
+.question-dashboard {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(320px, 0.8fr);
+  align-items: center;
+  gap: 32px;
+  min-height: 230px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #eaf7ff, #fffbea);
+  border: 1px solid rgba(7, 159, 227, 0.18);
+  border-radius: var(--radius);
+}
+
+.question-dashboard-copy span {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.question-dashboard-copy h2 {
+  max-width: 520px;
+  margin-top: 8px;
+  color: var(--text-primary);
+  font-size: clamp(22px, 2.5vw, 32px);
+  line-height: 1.18;
+}
+
+.question-dashboard-copy p {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.question-dashboard-chart {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.awareness-dashboard { padding: 28px 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.awareness-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.awareness-heading span { color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.awareness-heading h2 { margin-top: 7px; font-size: clamp(22px, 2.4vw, 30px); }
+.awareness-heading p { margin-top: 7px; color: var(--text-muted); font-size: 13px; }
+.awareness-total { min-width: 120px; padding: 12px 16px; display: flex; flex-direction: column; text-align: right; background: #fff7b3; border-radius: var(--radius-sm); }
+.awareness-total strong { color: var(--blue); font-size: 26px; line-height: 1; }
+.awareness-total small { margin-top: 5px; color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
+.awareness-chart { position: relative; width: 100%; height: 330px; padding: 18px; background: linear-gradient(135deg, #f6fbff, #fffdf0); border-radius: var(--radius-sm); }
+
 /* stat list */
 .stat-list {
   background: var(--surface);
@@ -1435,6 +1485,8 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .question-dashboard { grid-template-columns: 1fr; }
+
   .chart-card,
   .stat-list {
     padding: 1rem;
@@ -1590,6 +1642,12 @@ body {
   .city-kpi { min-height: 104px; }
   .delivery-panel { padding: 18px; }
   .delivery-heading { align-items: flex-start; }
+  .question-dashboard { padding: 20px; gap: 20px; }
+  .question-dashboard-chart { padding: 14px; overflow-x: auto; }
+  .awareness-dashboard { padding: 20px; }
+  .awareness-heading { flex-direction: column; }
+  .awareness-total { text-align: left; }
+  .awareness-chart { height: 360px; padding: 10px; }
   .stat-benefit {
     display: none;
   }

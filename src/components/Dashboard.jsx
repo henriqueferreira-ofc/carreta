@@ -73,6 +73,24 @@ const DONUT_OPTS = {
   plugins: { legend: { display: false } }
 }
 
+function groupAwarenessSources(sources = {}) {
+  const groups = {}
+  const add = (label, value) => { groups[label] = (groups[label] || 0) + value }
+
+  Object.entries(sources).forEach(([label, value]) => {
+    const normalized = label.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+    if (/sepd|secretaria/.test(normalized)) add('SEPD / Secretaria', value)
+    else if (/instagram|facebook|rede social|redes sociais/.test(normalized)) add('Redes sociais', value)
+    else if (/whatsapp|mensagem|ligacao|telefone/.test(normalized)) add('Contato direto', value)
+    else if (/televis|\btv\b|radio|midia/.test(normalized)) add('TV / rádio / mídia', value)
+    else if (/internet|google|site/.test(normalized)) add('Internet', value)
+    else if (/^(nao|n|nenhum|nao sei)$/.test(normalized)) add('Não informado', value)
+    else add('Outros', value)
+  })
+
+  return Object.entries(groups).sort((a, b) => b[1] - a[1])
+}
+
 function MetricCard({ label, value, accent }) {
   return (
     <div className="metric-card" style={{ borderTop: `3px solid ${accent}` }}>
@@ -156,7 +174,8 @@ export default function Dashboard({ data, onBack }) {
 
   const benEntries = Object.entries(data.beneficios).sort((a,b)=>b[1]-a[1])
   const defEntries = Object.entries(data.deficiencias).sort((a,b)=>b[1]-a[1])
-  const fonteEntries = Object.entries(data.fontes||{}).sort((a,b)=>b[1]-a[1])
+  const groupedFonteEntries = groupAwarenessSources(data.fontes)
+  const groupedFonteTotal = groupedFonteEntries.reduce((sum, [, value]) => sum + value, 0)
   const topBenefit = benEntries[0]
   const benefitTotal = benEntries.reduce((a,[,v])=>a+v,0)
   const topBenefitPct = topBenefit && benefitTotal > 0 ? Math.round(topBenefit[1]/benefitTotal*100) : 0
@@ -363,23 +382,15 @@ export default function Dashboard({ data, onBack }) {
               </div>
             )}
 
-            <div className="stat-list">
-              <div className="stat-list-title">Ranking de necessidades</div>
-              {benEntries.map(([label, value], i) => {
-                const tot = benEntries.reduce((a,[,v])=>a+v,0)
-                const pct = Math.round(value/tot*100)
-                return (
-                  <div key={label} className="stat-row">
-                    <div className="stat-rank">#{i+1}</div>
-                    <div className="stat-label">{label}</div>
-                    <div className="stat-bar-wrap">
-                      <div className="stat-bar-fill" style={{ width: pct+'%', background: PALETTE.blue }}></div>
-                    </div>
-                    <div className="stat-count">{value}</div>
-                    <div className="stat-pct">{pct}%</div>
-                  </div>
-                )
-              })}
+            <div className="question-dashboard">
+              <div className="question-dashboard-copy">
+                <span>PERGUNTA 5</span>
+                <h2>Você conhece todos os serviços da Secretaria?</h2>
+                <p>Distribuição das respostas registradas no formulário.</p>
+              </div>
+              <div className="question-dashboard-chart">
+                <DonutWithLegend data={data.conheceSepd} colors={[PALETTE.teal, PALETTE.orange]} />
+              </div>
             </div>
           </div>
         )}
@@ -427,26 +438,35 @@ export default function Dashboard({ data, onBack }) {
               </div>
             </div>
 
-            {fonteEntries.length > 0 && (
-              <div className="chart-card">
-                <div className="chart-card-title">Como souberam da Carreta</div>
-                <div className="chart-card-sub">Pergunta 8 — campo aberto agrupado</div>
-                <div className="stat-list" style={{ marginTop: 16 }}>
-                  {fonteEntries.map(([label, value], i) => {
-                    const tot = fonteEntries.reduce((a,[,v])=>a+v,0)
-                    const pct = Math.round(value/tot*100)
-                    return (
-                      <div key={label} className="stat-row">
-                        <div className="stat-dot" style={{ background: BAR_COLORS[i % BAR_COLORS.length] }}></div>
-                        <div className="stat-label">{label}</div>
-                        <div className="stat-bar-wrap">
-                          <div className="stat-bar-fill" style={{ width: pct+'%', background: BAR_COLORS[i % BAR_COLORS.length] }}></div>
-                        </div>
-                        <div className="stat-count">{value}</div>
-                        <div className="stat-pct">{pct}%</div>
-                      </div>
-                    )
-                  })}
+            {groupedFonteEntries.length > 0 && (
+              <div className="awareness-dashboard">
+                <div className="awareness-heading">
+                  <div>
+                    <span>PERGUNTA 8</span>
+                    <h2>Como souberam da Carreta?</h2>
+                    <p>Respostas semelhantes foram reunidas por canal.</p>
+                  </div>
+                  <div className="awareness-total"><strong>{groupedFonteTotal.toLocaleString('pt-BR')}</strong><small>respostas</small></div>
+                </div>
+                <div className="awareness-chart">
+                  <Bar
+                    data={{
+                      labels: groupedFonteEntries.map(([label]) => label),
+                      datasets: [{
+                        data: groupedFonteEntries.map(([, value]) => value),
+                        backgroundColor: groupedFonteEntries.map((_, index) => BAR_COLORS[index % BAR_COLORS.length]),
+                        borderRadius: 7,
+                        borderSkipped: false,
+                      }]
+                    }}
+                    options={{
+                      ...BAR_OPTS(true),
+                      plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: context => `${context.raw} respostas (${Math.round(context.raw / groupedFonteTotal * 100)}%)` } }
+                      }
+                    }}
+                  />
                 </div>
               </div>
             )}

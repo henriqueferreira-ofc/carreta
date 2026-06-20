@@ -9,6 +9,9 @@ export default function CitiesView({ data }) {
   const cities = useMemo(() => getCities(data?.cidades), [data])
   const selectedCity = cities.find(city => city.key === selectedKey)
   const cityDetails = selectedCity ? CITY_DETAILS[selectedCity.key] : null
+  const liveCityDetails = cityDetails && selectedCity
+    ? { ...cityDetails, domicilio: selectedCity.count }
+    : null
   const filteredCities = cities.filter(city =>
     normalizeCityKey(city.name).includes(normalizeCityKey(query))
   )
@@ -27,7 +30,7 @@ export default function CitiesView({ data }) {
             <p>{selectedCity.count.toLocaleString('pt-BR')} {selectedCity.count === 1 ? 'registro encontrado' : 'registros encontrados'}</p>
           </div>
         </div>
-        {cityDetails ? <CityDashboard details={cityDetails} /> : <div className="city-empty-state">
+        {liveCityDetails ? <CityDashboard details={liveCityDetails} /> : <div className="city-empty-state">
           <MapPin size={30} aria-hidden="true" />
           <h2>Informações da cidade em preparação</h2>
           <p>Os registros desta cidade já estão selecionados. Os indicadores e conteúdos específicos serão exibidos aqui quando forem cadastrados.</p>

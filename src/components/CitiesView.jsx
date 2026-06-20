@@ -40,7 +40,7 @@ export default function CitiesView({ data }) {
     <section className="cities-view" aria-labelledby="cities-title">
       <div className="cities-heading">
         <div>
-          <h1 id="cities-title">Cidades atendidas</h1>
+          <h1 id="cities-title">CIDADES ATENDIDAS</h1>
           <p>Selecione uma cidade para visualizar suas informações</p>
         </div>
         <div className="cities-count" aria-label={`${cities.length} cidades`}>

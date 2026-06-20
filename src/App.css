@@ -1112,7 +1112,8 @@ body {
 
 .cities-view, .city-detail { max-width: 1200px; margin: 0 auto; }
 .cities-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
-.cities-heading h1, .city-detail-heading h1 { font-size: clamp(26px, 3vw, 36px); line-height: 1.15; }
+.cities-heading h1 { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; }
+.city-detail-heading h1 { font-size: clamp(26px, 3vw, 36px); line-height: 1.15; }
 .cities-heading p, .city-detail-heading p { color: var(--text-muted); margin-top: 6px; }
 .cities-count { color: var(--blue); background: var(--teal-light); border: 1px solid rgba(7,159,227,.18); border-radius: 999px; padding: 8px 14px; white-space: nowrap; font-size: 13px; }
 .city-search { width: min(100%, 440px); min-height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-muted); margin-bottom: 20px; }

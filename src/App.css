@@ -1139,13 +1139,15 @@ body {
 .city-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .city-kpi { min-height: 126px; display: flex; align-items: center; gap: 15px; padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .city-kpi.primary { color: white; background: linear-gradient(135deg, #006fb8, #079fe3); border-color: transparent; }
+.city-kpi.gold { background: linear-gradient(135deg, #ffe200, #ffeb66); border-color: rgba(216,180,0,.28); }
 .city-kpi.yellow { background: linear-gradient(135deg, #fffbea, #fff4a3); border-color: rgba(216,180,0,.2); }
 .city-kpi-icon { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border-radius: 12px; color: var(--blue); background: var(--teal-light); }
 .city-kpi.primary .city-kpi-icon { color: white; background: rgba(255,255,255,.16); }
+.city-kpi.gold .city-kpi-icon,
 .city-kpi.yellow .city-kpi-icon { background: white; }
 .city-kpi-icon svg { width: 21px; }
 .city-kpi div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.city-kpi small { color: var(--text-muted); font-size: 12px; }
+.city-kpi small { color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: .035em; text-transform: uppercase; }
 .city-kpi.primary small { color: rgba(255,255,255,.78); }
 .city-kpi strong { color: var(--text-primary); font-size: clamp(25px, 3vw, 34px); line-height: 1; }
 .city-kpi.primary strong { color: white; }

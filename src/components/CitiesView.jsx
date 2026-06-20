@@ -104,7 +104,7 @@ function CityDashboard({ details }) {
           <span className="city-kpi-icon"><Users aria-hidden="true" /></span>
           <div><small>Presentes no evento</small><strong>{format(details.presentes)}</strong></div>
         </article>
-        <article className="city-kpi">
+        <article className="city-kpi gold">
           <span className="city-kpi-icon"><CreditCard aria-hidden="true" /></span>
           <div><small>Total confeccionadas</small><strong>{format(details.confeccionadas)}</strong></div>
         </article>
@@ -116,8 +116,8 @@ function CityDashboard({ details }) {
 
       <article className="delivery-panel">
         <div className="delivery-heading">
-          <div><h2>Distribuição das carteirinhas</h2><p>Panorama das entregas informadas</p></div>
-          <div className="delivery-total"><small>Total distribuído</small><strong>{format(distributionTotal)}</strong></div>
+          <div><h2>DISTRIBUIÇÃO DAS CARTEIRINHAS</h2><p>Panorama das entregas informadas</p></div>
+          <div className="delivery-total"><small>TOTAL DISTRIBUÍDO</small><strong>{format(distributionTotal)}</strong></div>
         </div>
         <div className="delivery-list">
           {distribution.map(item => {

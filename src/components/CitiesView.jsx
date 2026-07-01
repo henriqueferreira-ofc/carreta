@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { ArrowLeft, ChevronRight, Clock3, CreditCard, Home, MapPin, Search, Users } from 'lucide-react'
+import { Bar } from 'react-chartjs-2'
 import { CITY_DETAILS } from '../data/cityDetails'
 import { getCities, normalizeCityKey } from '../utils/cities'
 
@@ -85,8 +86,137 @@ export default function CitiesView({ data }) {
               ))}
             </div>
           )}
+          <CityDeliveryCharts cities={cities} />
         </>
       )}
+    </section>
+  )
+}
+
+function CityDeliveryCharts({ cities }) {
+  const format = value => value.toLocaleString('pt-BR')
+  const chartCities = cities
+    .map(city => {
+      const evento = CITY_DETAILS[city.key]?.evento || 0
+      const domicilio = city.count
+      return { ...city, evento, domicilio, alcance: evento + domicilio }
+    })
+    .sort((a, b) => b.alcance - a.alcance)
+
+  const totalEvento = chartCities.reduce((sum, city) => sum + city.evento, 0)
+  const totalDomicilio = chartCities.reduce((sum, city) => sum + city.domicilio, 0)
+  const totalAlcance = totalEvento + totalDomicilio
+  const height = Math.max(360, chartCities.length * 34)
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: 'rgba(0,111,184,.1)' },
+        ticks: { color: '#6B7882', precision: 0 },
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#44515b', font: { size: 11, family: 'DM Sans' } },
+      },
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: context => `${format(context.raw)} carteirinhas`,
+        },
+      },
+    },
+  }
+
+  const percentageOptions = {
+    ...options,
+    scales: {
+      ...options.scales,
+      x: {
+        ...options.scales.x,
+        max: 100,
+        ticks: { ...options.scales.x.ticks, callback: value => `${value}%` },
+      },
+    },
+    plugins: {
+      ...options.plugins,
+      tooltip: {
+        callbacks: {
+          label: context => {
+            const city = chartCities[context.dataIndex]
+            return `${context.raw.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}% · ${format(city.alcance)} entregas`
+          },
+        },
+      },
+    },
+  }
+
+  const makeDataset = (values, color) => ({
+    data: values,
+    backgroundColor: color,
+    borderRadius: 6,
+    borderSkipped: false,
+    minBarLength: 2,
+  })
+
+  return (
+    <section className="city-charts" aria-labelledby="city-charts-title">
+      <div className="city-charts-heading">
+        <span>CONSOLIDADO DE ENTREGAS</span>
+        <h2 id="city-charts-title">Análise de Dados de Entregas, Carreta e Domicílio</h2>
+        <p>Comparativo calculado com os dados exibidos acima e com as entregas registradas nos eventos.</p>
+      </div>
+
+      <article className="city-chart-card">
+        <div className="city-chart-header">
+          <div><h3>Carteirinhas entregues nos eventos</h3><p>Total e distribuição por cidade</p></div>
+          <strong>{format(totalEvento)}<small>entregues</small></strong>
+        </div>
+        <div className="city-chart-canvas" style={{ height }}>
+          <Bar
+            data={{ labels: chartCities.map(city => city.name), datasets: [makeDataset(chartCities.map(city => city.evento), '#079FE3')] }}
+            options={options}
+          />
+        </div>
+      </article>
+
+      <article className="city-chart-card">
+        <div className="city-chart-header">
+          <div><h3>Carteirinhas entregues em domicílio</h3><p>Total e distribuição por cidade</p></div>
+          <strong>{format(totalDomicilio)}<small>entregues</small></strong>
+        </div>
+        <div className="city-chart-canvas" style={{ height }}>
+          <Bar
+            data={{ labels: chartCities.map(city => city.name), datasets: [makeDataset(chartCities.map(city => city.domicilio), '#D8B400')] }}
+            options={options}
+          />
+        </div>
+      </article>
+
+      <article className="city-chart-card">
+        <div className="city-chart-header">
+          <div><h3>Proporção potencial de votos por cidade</h3><p>Participação de cada cidade no total de entregas: evento + domicílio</p></div>
+          <strong>{format(totalAlcance)}<small>pessoas alcançadas</small></strong>
+        </div>
+        <div className="city-chart-canvas" style={{ height }}>
+          <Bar
+            data={{
+              labels: chartCities.map(city => city.name),
+              datasets: [makeDataset(
+                chartCities.map(city => totalAlcance ? Number((city.alcance / totalAlcance * 100).toFixed(1)) : 0),
+                '#006FB8'
+              )],
+            }}
+            options={percentageOptions}
+          />
+        </div>
+        <p className="city-chart-note">Estimativa de alcance, não pesquisa de intenção de voto. Cada carteirinha entregue foi considerada uma pessoa potencialmente alcançada.</p>
+      </article>
     </section>
   )
 }

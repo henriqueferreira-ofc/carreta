@@ -4,6 +4,8 @@ export const FIXED_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1BIst4qwg
 // Usada como fallback quando a descoberta dinâmica via HTML não retorna resultados
 export const KNOWN_CITY_TABS = {
   '1BIst4qwgxn1ZARnJwgwNLfKXB2f4HVO3zQl4V_xTndc': [
+    { gid: '1671171090', name: 'Taguatinga' },
+    { gid: '1472471939', name: 'Vicente Pires' },
     { gid: '1399475077', name: 'Paranoá' },
     { gid: '1352801462', name: 'Itapoã' },
     { gid: '1984153019', name: 'Riacho Fundo I' },

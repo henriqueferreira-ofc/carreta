@@ -37,7 +37,7 @@ async function getSheetTabs(sheetId) {
   const fallbackTabs = KNOWN_CITY_TABS[sheetId] || []
 
   try {
-    const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`)
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`, { cache: 'no-store' })
     if (!res.ok) return fallbackTabs
 
     const html = await res.text()
@@ -63,7 +63,7 @@ function isGoogleError(text) {
 }
 
 async function fetchCsvUrl(url) {
-  const res = await fetch(url)
+  const res = await fetch(url, { cache: 'no-store' })
   if (!res.ok) return null
 
   const csv = await res.text()
@@ -126,7 +126,7 @@ export async function fetchSheetCsv(sheetUrl) {
 
   for (const url of urls) {
     try {
-      const res = await fetch(url)
+      const res = await fetch(url, { cache: 'no-store' })
       lastStatus = res.status ? ` (${res.status})` : ''
       if (!res.ok) continue
 

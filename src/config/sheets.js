@@ -4,6 +4,13 @@ export const FIXED_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1BIst4qwg
 // Usada como fallback quando a descoberta dinâmica via HTML não retorna resultados
 export const KNOWN_CITY_TABS = {
   '1BIst4qwgxn1ZARnJwgwNLfKXB2f4HVO3zQl4V_xTndc': [
+    { gid: '894366868', name: 'Asa Norte' },
+    { gid: '349099053', name: 'Plano Piloto' },
+    { gid: '12946047', name: 'Vila Planalto' },
+    { gid: '2014377664', name: 'Asa Sul' },
+    { gid: '975286890', name: 'Granja do Torto' },
+    { gid: '1287827657', name: 'Noroeste' },
+    { gid: '1320605591', name: 'Vila Telebrasília' },
     { gid: '1671171090', name: 'Taguatinga' },
     { gid: '1472471939', name: 'Vicente Pires' },
     { gid: '1399475077', name: 'Paranoá' },

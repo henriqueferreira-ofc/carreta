@@ -13,11 +13,12 @@ function getCsvUrls(sheetUrl) {
   const { sheetId, gid } = getSheetInfo(sheetUrl)
   const gidParam = gid ? `&gid=${gid}` : ''
   const exportGidParam = gid ? `&gid=${gid}` : ''
+  const cacheBust = `&_=${Date.now()}`
 
   return [
-    `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv${gidParam}`,
-    `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv${exportGidParam}`,
-    `https://docs.google.com/spreadsheets/d/${sheetId}/pub?output=csv${gid ? `&gid=${gid}` : ''}`,
+    `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv${gidParam}${cacheBust}`,
+    `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv${exportGidParam}${cacheBust}`,
+    `https://docs.google.com/spreadsheets/d/${sheetId}/pub?output=csv${gid ? `&gid=${gid}` : ''}${cacheBust}`,
   ]
 }
 
@@ -37,7 +38,7 @@ async function getSheetTabs(sheetId) {
   const fallbackTabs = KNOWN_CITY_TABS[sheetId] || []
 
   try {
-    const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`, { cache: 'no-store' })
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing&_=${Date.now()}`, { cache: 'no-store' })
     if (!res.ok) return fallbackTabs
 
     const html = await res.text()
@@ -78,7 +79,7 @@ async function fetchAllTabsCsv(sheetId) {
   let emptyTabs = 0
 
   for (const tab of tabs) {
-    const csv = await fetchCsvUrl(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${tab.gid}`)
+    const csv = await fetchCsvUrl(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${tab.gid}&_=${Date.now()}`)
     if (!csv) continue
 
     const table = parseCSVTable(csv)
@@ -163,7 +164,7 @@ export async function fetchSheetStats(sheetUrl) {
     let citiesWithData = 0
     for (const tab of tabs) {
       const csv = await fetchCsvUrl(
-        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${tab.gid}`
+        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${tab.gid}&_=${Date.now()}`
       )
       if (!csv) continue
       const table = parseCSVTable(csv)

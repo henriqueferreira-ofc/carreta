@@ -1,3 +1,4 @@
+/* global __BUILD_VERSION__ */
 import { useEffect, useRef, useState } from 'react'
 import Dashboard from './components/Dashboard'
 import CountUp from './components/landing/CountUp'
@@ -9,6 +10,9 @@ import './App.css'
 import heroImage from './assets/hero.png'
 
 const INCLUSAO_LOGO = `${import.meta.env.BASE_URL}inclusao.png`
+const BUILD_VERSION = __BUILD_VERSION__
+const BUILD_VERSION_KEY = 'carreta-build-version'
+const REFRESHED_VERSION_KEY = 'carreta-refreshed-version'
 
 export default function App() {
   const [data, setData] = useState(null)
@@ -16,6 +20,23 @@ export default function App() {
   const [error, setError] = useState('')
   const panelRef = useRef(null)
   const [sheetStats, setSheetStats] = useState({ totalCities: null, citiesWithData: null })
+
+  useEffect(() => {
+    const storedVersion = localStorage.getItem(BUILD_VERSION_KEY)
+    const refreshedVersion = sessionStorage.getItem(REFRESHED_VERSION_KEY)
+
+    if (storedVersion && storedVersion !== BUILD_VERSION && refreshedVersion !== BUILD_VERSION) {
+      sessionStorage.setItem(REFRESHED_VERSION_KEY, BUILD_VERSION)
+      localStorage.setItem(BUILD_VERSION_KEY, BUILD_VERSION)
+
+      const url = new URL(window.location.href)
+      url.searchParams.set('v', BUILD_VERSION)
+      window.location.replace(url.toString())
+      return
+    }
+
+    localStorage.setItem(BUILD_VERSION_KEY, BUILD_VERSION)
+  }, [])
 
   useEffect(() => {
     fetchSheetStats(FIXED_SHEET_URL).then(setSheetStats)
